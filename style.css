@@ -62,6 +62,21 @@
      border-radius: 0 0 50px 50px;
  }
 
+ /* --- Búsqueda y Filtros --- */
+ #barra-busqueda-filtros {
+     border: 1px solid #f0f0f0;
+ }
+
+ #input-buscador:focus,
+ #selector-categoria:focus {
+     border-color: var(--dorado);
+     box-shadow: 0 0 0 0.25rem rgba(212, 163, 115, 0.25);
+ }
+
+ .input-group-text {
+     border-color: #dee2e6;
+ }
+
  /* --- Tarjetas de Producto --- */
  .tarjeta-producto {
      border: none;

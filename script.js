@@ -1,4 +1,4 @@
-class Cafe {
+class Producto {
     #nombre;
     #precio;
     #categoria;
@@ -6,8 +6,9 @@ class Cafe {
     #id;
     #subTotal;
     #cantidad;
+    #imagen;
 
-    constructor(nombre, precio, categoria, descripcion, id) {
+    constructor(nombre, precio, categoria, descripcion, id, imagen) {
         this.#nombre = nombre
         this.#precio = precio
         this.#categoria = categoria
@@ -15,6 +16,7 @@ class Cafe {
         this.#id = id
         this.#subTotal = 0
         this.#cantidad = 0
+        this.#imagen = imagen
     }
 
     get nombre() {
@@ -43,6 +45,13 @@ class Cafe {
 
     get cantidad() {
         return this.#cantidad
+    }
+
+    get imagen() {
+        return this.#imagen
+    }
+    set imagen(value) {
+        this.imagen = value
     }
 
     set nombre(value) {
@@ -113,15 +122,15 @@ class Carrito {
         return this.#subTotalCarrito
     }
 
-    get productos(value) {
+    set productos(value) {
         this.productos = value
     }
 
-    get total(value) {
+    set total(value) {
         this.total = value
     }
 
-    get subTotalCarrito(value) {
+    set subTotalCarrito(value) {
         this.subTotalCarrito = value
     }
 
@@ -139,3 +148,21 @@ class Carrito {
         return impuesto
     }
 }
+
+//Crear los Cafes
+let inventario = []
+let generarId = () => {
+    return Math.floor(Math.random() * 1000)
+}
+
+let cafeUno = new Producto("Café Americano", 12, "Bebida caliente", "Café negro tradicional", generarId(), '#')
+let cafedos = new Producto("Café Latte", 18, "Bebida caliente", "Café con leche espumada", generarId(), '#')
+let cafetre = new Producto("Frappe de Chocolate", 25, "Bebida fría", "Bebida fría con chocolate y crema", generarId(), '#')
+let cafecuatro = new Producto("Smoothie de Fresa", 22, "Bebida fría", "Batido natural de fresa", generarId(), '#')
+let cafecinco = new Producto("Muffin de Vainilla", 15, "Postre", "Pan dulce suave de vainilla", generarId(), '#')
+let cafeseis = new Producto("Cheesecake", 28, "Postre", "Pastel frío de queso", generarId(), '#')
+let cafesiete = new Producto("Sandwich de Pollo", 30, "Comida", "Sandwich con pollo y vegetales", generarId(), '#')
+let cafeocho = new Producto("Bagel con Queso", 20, "Comida", "Bagel tostado con queso crema", generarId(), '#')
+
+inventario.push(cafeUno, cafedos, cafetre, cafecuatro, cafecinco, cafeseis, cafesiete, cafeocho)
+
