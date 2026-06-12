@@ -114,7 +114,7 @@ class Carrito {
     }
 
     set productos(value) {
-        this._productos = value
+        this.productos = value
     }
 
     set total(value) {
@@ -123,6 +123,11 @@ class Carrito {
 
     set subTotalCarrito(value) {
         this.subTotalCarrito = value
+    }
+
+    eliminar(value) {
+        let indice = this.productos.findIndex(item => item.id == value.getAttribute('data-id'))
+        carrito.splice(indice, 1)
     }
 
     sumarSubtotalDos() {
@@ -161,8 +166,19 @@ let objetoCarrito = new Carrito(carrito)
 
 inventario.push(cafeUno, cafedos, cafetre, cafecuatro, cafecinco, cafeseis, cafesiete, cafeocho)
 
+//seccionFiltros
+const filtrosEleccion = document.querySelector('#selector-categoria')
+const filtrosInput = document.querySelector('#input-buscador')
+
+//Espacios visuales de la pagina
 const visualMenu = document.querySelector('#contenedor-productos')
 const visualCarrito = document.querySelector('#cuerpo-carrito')
+const generalCarrito = document.querySelector('#carrito-sidebar')
+const visualPago = document.querySelector('#vista-pago')
+
+//botones
+const botonFinalizarCompra = document.querySelector('#boton-proceder-pago')
+
 
 function dibujarProductos(inventario) {
     visualMenu.innerHTML = ''
@@ -208,13 +224,16 @@ function dibujarCarrito(carrito) {
                         <span class="fw-bold">${item.cantidad}</span>
                         <button class="btn btn-sm btn-aumentar aumentar" data-id="${item.id}">+</button>
                     </div>
-                    <button class="btn btn-sm text-danger btn-borrar borrar" data-id="${item.id}"><i
-                            class="fa-solid fa-trash" ></i></button>
+                    <button class="btn btn-sm text-danger btn-borrar borrar" data-id="${item.id}">Eliminar</button>
                 </div>
         `
     }
 
     visualCarrito.innerHTML = moldeHTML
+}
+
+function aplicaFiltros(inventario, eleccion) {
+    let filtros = inventario.filter(item => item)
 }
 
 visualMenu.addEventListener('click', (event) => {
@@ -225,31 +244,53 @@ visualMenu.addEventListener('click', (event) => {
         if (!busquedaCarrito.includes(busqueda.id)) {
             busquedaCarrito.push(busqueda.id)
             objetoCarrito.productos = objetoCarrito
-            console.log(objetoCarrito)
             carrito.push(busqueda)
         }
         dibujarCarrito(carrito)
-        console.log(carrito)
         busqueda.sumarSubtotal()
+    }
 
+    if (carrito.length == 1) {
+        botonFinalizarCompra.disabled = false
+    } else {
+        botonFinalizarCompra.disabled = true
     }
 })
 
 visualCarrito.addEventListener('click', (event) => {
     if (event.target.classList.contains('btn')) {
         let busqueda = inventario.find(item => item.id == event.target.getAttribute('data-id'))
-        busqueda.aumentaCantidad()
         if (event.target.classList.contains('aumentar')) {
+
             busqueda.aumentaCantidad()
         } else if (event.target.classList.contains('reducir')) {
-            busqueda.disminuirProducto()
-        } else {
-            let indice = inventario.findIndex(item => item.id == event.target.getAttribute('data-id'))
-            carrito.splice(indice, 1)
-            console.log(carrito)
+            if (busqueda.cantidad != 1) {
+                busqueda.disminuirProducto()
+            }
+        } else if (event.target.classList.contains('borrar')) {
+            objetoCarrito.eliminar(event.target)
         }
         dibujarCarrito(carrito)
+
+        if (carrito.length == 1) {
+            botonFinalizarCompra.disabled = false
+        } else {
+            botonFinalizarCompra.disabled = true
+        }
     }
+})
+
+botonFinalizarCompra.addEventListener('click', () => {
+    visualMenu.classList.add('d-none')
+    visualPago.classList.remove('d-none')
+    // generalCarrito.classList.remove('show')
+
+})
+
+
+//filtros
+filtrosEleccion.addEventListener('change', (event) => {
+
 })
 
 dibujarProductos(inventario)

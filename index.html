@@ -60,9 +60,10 @@
                 <div class="col-md-5 col-lg-4">
                     <select class="form-select shadow-none" id="selector-categoria">
                         <option value="todos" selected>Todas las categorías</option>
-                        <option value="caliente">Bebidas Calientes</option>
-                        <option value="frio">Bebidas Frías</option>
-                        <option value="postre">Postres y Panadería</option>
+                        <option value="Bebida caliente">Bebidas Calientes</option>
+                        <option value="bebida frio">Bebidas Frías</option>
+                        <option value="postre">Postres</option>
+                        <option value="comida">Comida</option>
                     </select>
                 </div>
 
@@ -153,10 +154,10 @@
                     <span class="fs-5 fw-bold">Subtotal:</span>
                     <span class="fs-5 fw-bold text-success" id="subtotal-carrito">Q 0.00</span>
                 </div>
-                <button class="btn btn-warning w-100 fw-bold py-2 mb-2" id="boton-proceder-pago">
+                <button class="btn btn-warning w-100 fw-bold py-2 mb-2" id="boton-proceder-pago" disabled>
                     PROCEDER AL PAGO <i class="fa-solid fa-arrow-right ms-2"></i>
                 </button>
-                <button class="btn btn-outline-secondary w-100 btn-sm" id="boton-vaciar-carrito">
+                <button class="btn btn-outline-secondary w-100 btn-sm" id="boton-vaciar-carrito" disabled>
                     Vaciar Carrito
                 </button>
             </div>
