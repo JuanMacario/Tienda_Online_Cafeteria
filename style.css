@@ -1,0 +1,18 @@
+/* CSS adicional mínimo para la estética */
+body {
+    background-color: #f8f9fa;
+}
+
+.tarjeta-cafe {
+    transition: transform 0.2s;
+}
+
+.tarjeta-cafe:hover {
+    transform: scale(1.03);
+}
+
+/* Clase de utilidad para vistas activas/inactivas manejadas por JS */
+
+.seccion-vista.activa {
+    display: block;
+}
