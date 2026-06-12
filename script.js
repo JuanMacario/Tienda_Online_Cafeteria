@@ -4,7 +4,6 @@ class Producto {
     #categoria;
     #descripcion;
     #id;
-    #subTotal;
     #cantidad;
     #imagen;
 
@@ -14,7 +13,6 @@ class Producto {
         this.#categoria = categoria
         this.#descripcion = descripcion
         this.#id = id
-        this.#subTotal = 0
         this.#cantidad = 0
         this.#imagen = imagen
     }
@@ -40,7 +38,7 @@ class Producto {
     }
 
     get subtotal() {
-        return this.#subTotal
+        return this._subTotal
     }
 
     get cantidad() {
@@ -75,27 +73,20 @@ class Producto {
     }
 
     set subtotal(value) {
-        this.subtotal = value
+        this._subtotal = value
     }
-
-    set cantidad(value) {
-        this.cantidad = value
-    }
-
-
 
     aumentaCantidad() {
-        this.cantidad += 1
-        this.sumarSubtotal()
+        this.#cantidad += 1
     }
 
     disminuirProducto() {
-        this.cantidad = this.cantidad - 1
-        this.sumarSubtotal()
+        this.#cantidad -= 1
     }
 
     sumarSubtotal() {
-        this.subtotal = this.cantidad * this.precio
+        let suma = this.cantidad * this.precio
+        this.subtotal = suma
     }
 }
 
@@ -123,7 +114,7 @@ class Carrito {
     }
 
     set productos(value) {
-        this.productos = value
+        this._productos = value
     }
 
     set total(value) {
@@ -134,7 +125,7 @@ class Carrito {
         this.subTotalCarrito = value
     }
 
-    sumarSubtotal() {
+    sumarSubtotalDos() {
         let suma;
         for (let item of this.productos) {
             suma += item.subtotal
@@ -151,8 +142,10 @@ class Carrito {
 
 //Crear los Cafes
 let inventario = []
+let carrito = []
+let busquedaCarrito = []
 let generarId = () => {
-    return Math.floor(Math.random() * 1000)
+    return Math.floor(Math.random() * 10000)
 }
 
 let cafeUno = new Producto("Café Americano", 12, "Bebida caliente", "Café negro tradicional", generarId(), '#')
@@ -164,9 +157,12 @@ let cafeseis = new Producto("Cheesecake", 28, "Postre", "Pastel frío de queso",
 let cafesiete = new Producto("Sandwich de Pollo", 30, "Comida", "Sandwich con pollo y vegetales", generarId(), '#')
 let cafeocho = new Producto("Bagel con Queso", 20, "Comida", "Bagel tostado con queso crema", generarId(), '#')
 
+let objetoCarrito = new Carrito(carrito)
+
 inventario.push(cafeUno, cafedos, cafetre, cafecuatro, cafecinco, cafeseis, cafesiete, cafeocho)
 
 const visualMenu = document.querySelector('#contenedor-productos')
+const visualCarrito = document.querySelector('#cuerpo-carrito')
 
 function dibujarProductos(inventario) {
     visualMenu.innerHTML = ''
@@ -180,11 +176,11 @@ function dibujarProductos(inventario) {
                             class="img-producto" alt="Croissant">
                         <div class="card-body">
                             <h5 class="card-title">${item.nombre}</h5>
-                            <p class="card-text text-muted small">Categoria: ${item.categoria}</p>
-                            <p class="card-text text-muted small">Descripcion: ${item.descripcion}</p>
+                            <p class="card-text text-muted mb-0 small"> <strong> Categoria: </strong> ${item.categoria}</p>
+                            <p class="card-text text-muted small"> <strong> Descripcion: </strong>     ${item.descripcion}</p>
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <span class="fs-4 fw-bold">Q ${item.precio}.00</span>
-                                <button class="btn btn-anadir btn-agregar">
+                                <button class="btn btn-anadir btn-agregar" data-id="${item.id}">
                                     Añadir <i class="fa-solid fa-plus ms-1"></i>
                                 </button>
                             </div>
@@ -195,5 +191,65 @@ function dibujarProductos(inventario) {
 
     visualMenu.innerHTML = moldeHTML
 }
+
+function dibujarCarrito(carrito) {
+    visualCarrito.innerHTML = ''
+    let moldeHTML = ''
+
+    for (let item of carrito) {
+        moldeHTML += `
+                <div class="item-carrito d-flex align-items-center justify-content-between" data-id="${item.id}">
+                    <div>
+                        <h6 class="mb-0">${item.nombre}</h6>
+                        <small class="text-muted">Q ${item.precio}.00 x ${item.cantidad}</small>
+                    </div>
+                    <div class="controles-cantidad">
+                        <button class="btn btn-sm btn-reducir reducir" data-id="${item.id}">-</button>
+                        <span class="fw-bold">${item.cantidad}</span>
+                        <button class="btn btn-sm btn-aumentar aumentar" data-id="${item.id}">+</button>
+                    </div>
+                    <button class="btn btn-sm text-danger btn-borrar borrar" data-id="${item.id}"><i
+                            class="fa-solid fa-trash" ></i></button>
+                </div>
+        `
+    }
+
+    visualCarrito.innerHTML = moldeHTML
+}
+
+visualMenu.addEventListener('click', (event) => {
+    if (event.target.classList.contains('btn')) {
+        let busqueda = inventario.find(item => item.id == event.target.getAttribute('data-id'))
+        busqueda.aumentaCantidad()
+
+        if (!busquedaCarrito.includes(busqueda.id)) {
+            busquedaCarrito.push(busqueda.id)
+            objetoCarrito.productos = objetoCarrito
+            console.log(objetoCarrito)
+            carrito.push(busqueda)
+        }
+        dibujarCarrito(carrito)
+        console.log(carrito)
+        busqueda.sumarSubtotal()
+
+    }
+})
+
+visualCarrito.addEventListener('click', (event) => {
+    if (event.target.classList.contains('btn')) {
+        let busqueda = inventario.find(item => item.id == event.target.getAttribute('data-id'))
+        busqueda.aumentaCantidad()
+        if (event.target.classList.contains('aumentar')) {
+            busqueda.aumentaCantidad()
+        } else if (event.target.classList.contains('reducir')) {
+            busqueda.disminuirProducto()
+        } else {
+            let indice = inventario.findIndex(item => item.id == event.target.getAttribute('data-id'))
+            carrito.splice(indice, 1)
+            console.log(carrito)
+        }
+        dibujarCarrito(carrito)
+    }
+})
 
 dibujarProductos(inventario)
