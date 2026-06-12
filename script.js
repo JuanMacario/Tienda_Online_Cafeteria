@@ -4,6 +4,8 @@ class Cafe {
     #categoria;
     #descripcion;
     #id;
+    #subTotal;
+    #cantidad;
 
     constructor(nombre, precio, categoria, descripcion, id) {
         this.#nombre = nombre
@@ -11,6 +13,8 @@ class Cafe {
         this.#categoria = categoria
         this.#descripcion = descripcion
         this.#id = id
+        this.#subTotal = 0
+        this.#cantidad = 0
     }
 
     get nombre() {
@@ -33,6 +37,14 @@ class Cafe {
         return this.#id
     }
 
+    get subtotal() {
+        return this.#subTotal
+    }
+
+    get cantidad() {
+        return this.#cantidad
+    }
+
     set nombre(value) {
         this.nombre = value
     }
@@ -52,72 +64,78 @@ class Cafe {
     set id(value) {
         this.id = value
     }
-}
 
-class Pedido {
-    #id;
-    #nombre;
-    #unitario;
-    #subTotal;
-    #cantidad;
-
-    constructor(id, nombre, unitario, subtotal, cantidad) {
-        this.#id = id
-        this.#nombre = nombre
-        this.#unitario = unitario
-        this.#subTotal = subtotal
-        this.#cantidad = cantidad
-    }
-
-    set id() {
-        return this.#id
-    }
-
-    set nombre() {
-        return this.#nombre
-    }
-
-    set unitario() {
-        return this.#unitario
-    }
-
-    set subtotal() {
-        return this.#subTotal
-    }
-
-    set cantidad() {
-        return this.#cantidad
-    }
-
-    get id(value) {
-        this.id = value
-    }
-
-    get nombre(value) {
-        this.nombre = value
-    }
-
-    get unitario(value) {
-        this.unitario = value
-    }
-
-    get subtotal(value) {
+    set subtotal(value) {
         this.subtotal = value
     }
 
-    get cantidad(value) {
+    set cantidad(value) {
         this.cantidad = value
     }
 
+
+
     aumentaCantidad() {
         this.cantidad += 1
+        this.sumarSubtotal()
     }
 
     disminuirProducto() {
         this.cantidad = this.cantidad - 1
+        this.sumarSubtotal()
     }
 
     sumarSubtotal() {
-        this.subtotal = this.cantidad * this.unitario
+        this.subtotal = this.cantidad * this.precio
+    }
+}
+
+class Carrito {
+    #productos;
+    #total;
+    #subTotalCarrito;
+
+    constructor(productos) {
+        this.#productos = productos
+        this.#total = 0
+        this.#subTotalCarrito = 0
+    }
+
+    get productos() {
+        return this.#productos
+    }
+
+    get total() {
+        return this.#total
+    }
+
+    get subTotalCarrito() {
+        return this.#subTotalCarrito
+    }
+
+    get productos(value) {
+        this.productos = value
+    }
+
+    get total(value) {
+        this.total = value
+    }
+
+    get subTotalCarrito(value) {
+        this.subTotalCarrito = value
+    }
+
+    sumarSubtotal() {
+        let suma;
+        for (let item of this.productos) {
+            suma += item.subtotal
+        }
+        return suma
+    }
+
+    impuesto() {
+        let impuesto;
+        impuesto = this.sumarSubtotal() * 0.05
+        return impuesto
     }
 }
