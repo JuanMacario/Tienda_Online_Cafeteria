@@ -4,210 +4,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de Café - POO JS</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Coffee Aroma - Tienda de Especialidad</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@600&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <nav class="navbar navbar-expand-lg barra-navegacion sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#" id="logo-marca">☕ El Buen Grano</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
-                <span class="navbar-toggler-icon"></span>
+            <a class="navbar-brand" href="#" id="logo-sitio">
+                <i class="fa-solid fa-mug-hot me-2"></i>Coffee Aroma
+            </a>
+
+            <button class="boton-carrito position-relative" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#carrito-sidebar" id="boton-abrir-carrito">
+                <i class="fa-solid fa-cart-shopping me-2"></i>Mi Pedido
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                    id="contador-elementos">
+                    0
+                </span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end" id="menuNavegacion">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <button class="btn btn-outline-light me-2" id="btn-nav-catalogo">Catálogo</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-warning" id="btn-nav-carrito">
-                            🛒 Carrito <span class="badge bg-danger" id="contador-carrito">0</span>
-                        </button>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
 
-    <main class="container my-5">
+    <header class="hero">
+        <div class="container">
+            <h1 class="display-3 fw-bold">El arte del café en cada taza</h1>
+            <p class="fs-4">Seleccionamos los mejores granos del mundo para ti.</p>
+        </div>
+    </header>
 
-        <section id="vista-catalogo" class="seccion-vista activa">
-            <h2 class="mb-4">Nuestros Cafés</h2>
+    <main class="container mb-5">
+
+        <section id="vista-principal">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="text-uppercase" style="letter-spacing: 2px;">Nuestro Menú</h2>
+                <span class="text-muted" id="fecha-actual">Especial de hoy</span>
+            </div>
+
             <div class="row g-4" id="contenedor-productos">
 
-                <div class="col-md-4 col-lg-3">
-                    <div class="card h-100 tarjeta-cafe shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1559525839-b184a4d698c7?w=500&q=80"
-                            class="card-img-top" alt="Café Americano" style="height: 200px; object-fit: cover;">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Café Americano</h5>
-                            <p class="card-text text-muted">Clásico, fuerte y con el balance perfecto para despertar.
+                <div class="col-md-6 col-lg-4">
+                    <div class="card tarjeta-producto shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=500"
+                            class="img-producto" alt="Espresso">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title mb-0">Espresso Intenso</h5>
+                                <span class="badge bg-success">Especialidad</span>
+                            </div>
+                            <p class="card-text text-muted small">Doble shot de granos arábica tostados a la perfección.
                             </p>
-                            <h6 class="text-success fw-bold mt-auto">Q 15.00</h6>
-                            <button class="btn btn-dark w-100 mt-3 btn-agregar-carrito" data-id="1"
-                                data-nombre="Café Americano" data-precio="15.00">
-                                Agregar al carrito
-                            </button>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fs-4 fw-bold">Q 12.00</span>
+                                <button class="btn btn-anadir btn-agregar" data-id="1" data-nombre="Espresso Intenso"
+                                    data-precio="12.00">
+                                    Añadir <i class="fa-solid fa-plus ms-1"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 col-lg-3">
-                    <div class="card h-100 tarjeta-cafe shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1572442388796-11668a67ef84?w=500&q=80"
-                            class="card-img-top" alt="Cappuccino" style="height: 200px; object-fit: cover;">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Cappuccino Vanilla</h5>
-                            <p class="card-text text-muted">Espuma suave con un toque dulce de vainilla.</p>
-                            <h6 class="text-success fw-bold mt-auto">Q 25.00</h6>
-                            <button class="btn btn-dark w-100 mt-3 btn-agregar-carrito" data-id="2"
-                                data-nombre="Cappuccino Vanilla" data-precio="25.00">
-                                Agregar al carrito
-                            </button>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card tarjeta-producto shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1572442388796-11668a67ef84?q=80&w=500"
+                            class="img-producto" alt="Cappuccino">
+                        <div class="card-body">
+                            <h5 class="card-title">Cappuccino Velvet</h5>
+                            <p class="card-text text-muted small">Capa sedosa de leche espumada con arte latte
+                                personalizado.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fs-4 fw-bold">Q 18.00</span>
+                                <button class="btn btn-anadir btn-agregar" data-id="2" data-nombre="Cappuccino Velvet"
+                                    data-precio="18.00">
+                                    Añadir <i class="fa-solid fa-plus ms-1"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 col-lg-3">
-                    <div class="card h-100 tarjeta-cafe shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&q=80"
-                            class="card-img-top" alt="Frappé" style="height: 200px; object-fit: cover;">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Frappé de Caramelo</h5>
-                            <p class="card-text text-muted">Bebida fría mezclada con hielo y sirope de caramelo.</p>
-                            <h6 class="text-success fw-bold mt-auto">Q 35.00</h6>
-                            <button class="btn btn-dark w-100 mt-3 btn-agregar-carrito" data-id="3"
-                                data-nombre="Frappé de Caramelo" data-precio="35.00">
-                                Agregar al carrito
-                            </button>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card tarjeta-producto shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=500"
+                            class="img-producto" alt="Frappe">
+                        <div class="card-body">
+                            <h5 class="card-title">Caramel Frappé</h5>
+                            <p class="card-text text-muted small">Mezcla fría con caramelo, crema batida y lluvia de
+                                chocolate.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fs-4 fw-bold">Q 25.00</span>
+                                <button class="btn btn-anadir btn-agregar" data-id="3" data-nombre="Caramel Frappé"
+                                    data-precio="25.00">
+                                    Añadir <i class="fa-solid fa-plus ms-1"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
-        </section>
-
-        <section id="vista-carrito" class="d-none">
-            <h2 class="mb-4">Tu Pedido</h2>
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Precio</th>
-                                    <th>Cantidad</th>
-                                    <th>Subtotal</th>
-                                    <th>Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody id="cuerpo-tabla-carrito">
-                                <tr>
-                                    <td>Café Americano</td>
-                                    <td>Q 15.00</td>
-                                    <td>
-                                        <div class="input-group input-group-sm" style="width: 100px;">
-                                            <button class="btn btn-outline-secondary btn-disminuir-cant"
-                                                data-id="1">-</button>
-                                            <input type="text" class="form-control text-center input-cant-carrito"
-                                                value="2" readonly>
-                                            <button class="btn btn-outline-secondary btn-aumentar-cant"
-                                                data-id="1">+</button>
-                                        </div>
-                                    </td>
-                                    <td>Q 30.00</td>
-                                    <td>
-                                        <button class="btn btn-danger btn-sm btn-eliminar-item"
-                                            data-id="1">Eliminar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <hr>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Total: <span class="text-success" id="precio-total-carrito">Q 30.00</span></h4>
-                        <div>
-                            <button class="btn btn-outline-secondary me-2" id="btn-seguir-comprando">Seguir
-                                Comprando</button>
-                            <button class="btn btn-success" id="btn-ir-a-pago">Proceder al Pago</button>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card tarjeta-producto shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?q=80&w=500"
+                            class="img-producto" alt="Cold Brew">
+                        <div class="card-body">
+                            <h5 class="card-title">Midnight Cold Brew</h5>
+                            <p class="card-text text-muted small">Infusión en frío por 18 horas, refrescante y con
+                                cafeína pura.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fs-4 fw-bold">Q 22.00</span>
+                                <button class="btn btn-anadir btn-agregar" data-id="4" data-nombre="Midnight Cold Brew"
+                                    data-precio="22.00">
+                                    Añadir <i class="fa-solid fa-plus ms-1"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card tarjeta-producto shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1509312380582-7f21226068d8?q=80&w=500"
+                            class="img-producto" alt="Croissant">
+                        <div class="card-body">
+                            <h5 class="card-title">Croissant Francés</h5>
+                            <p class="card-text text-muted small">Hojaldre crujiente hecho con mantequilla pura de alta
+                                calidad.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fs-4 fw-bold">Q 10.00</span>
+                                <button class="btn btn-anadir btn-agregar" data-id="5" data-nombre="Croissant Francés"
+                                    data-precio="10.00">
+                                    Añadir <i class="fa-solid fa-plus ms-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <section id="vista-pago" class="d-none">
-            <h2 class="mb-4">Finalizar Compra</h2>
             <div class="row">
-                <div class="col-md-8">
-                    <div class="card shadow-sm mb-4">
-                        <div class="card-header bg-dark text-white">
-                            Datos de Envío y Pago
-                        </div>
-                        <div class="card-body">
-                            <form id="formulario-pago">
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="pago-nombre" class="form-label">Nombre Completo</label>
-                                        <input type="text" class="form-control" id="pago-nombre" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="pago-correo" class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="pago-correo" required>
-                                    </div>
+                <div class="col-lg-8" id="seccion-pago">
+                    <h2 class="mb-4"><i class="fa-solid fa-credit-card me-2"></i>Finalizar Compra</h2>
+                    <form id="formulario-pago">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Nombre</label>
+                                <input type="text" class="form-control form-control-lg" id="input-nombre"
+                                    placeholder="Juan Pérez" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Email</label>
+                                <input type="email" class="form-control form-control-lg" id="input-email"
+                                    placeholder="juan@ejemplo.com" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold">Dirección de Entrega</label>
+                                <input type="text" class="form-control form-control-lg" id="input-direccion"
+                                    placeholder="Calle 10, Ciudad" required>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <h5 class="border-bottom pb-2">Método de Pago</h5>
+                                <div class="form-check form-check-inline mt-2">
+                                    <input class="form-check-input" type="radio" name="metodo" id="pago-tarjeta"
+                                        checked>
+                                    <label class="form-check-label" for="pago-tarjeta">Tarjeta de Crédito</label>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="pago-direccion" class="form-label">Dirección de Entrega</label>
-                                    <input type="text" class="form-control" id="pago-direccion" required>
-                                </div>
-                                <hr class="my-4">
-                                <h5 class="mb-3">Método de Pago</h5>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="metodoPago" id="pago-tarjeta"
-                                        value="tarjeta" checked>
-                                    <label class="form-check-label" for="pago-tarjeta">Tarjeta de Crédito /
-                                        Débito</label>
-                                </div>
-                                <div class="form-check mb-4">
-                                    <input class="form-check-input" type="radio" name="metodoPago" id="pago-efectivo"
-                                        value="efectivo">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="metodo" id="pago-efectivo">
                                     <label class="form-check-label" for="pago-efectivo">Efectivo al recibir</label>
                                 </div>
-
-                                <div class="d-grid gap-2">
-                                    <button type="submit" class="btn btn-success btn-lg"
-                                        id="btn-confirmar-pedido">Confirmar y Pagar</button>
-                                    <button type="button" class="btn btn-outline-danger" id="btn-cancelar-pago">Cancelar
-                                        Pedido</button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="mt-5">
+                            <button type="submit" class="btn btn-dark btn-lg w-100" id="boton-confirmar-compra">Pagar
+                                Ahora</button>
+                            <button type="button" class="btn btn-link w-100 mt-2 text-decoration-none text-muted"
+                                id="boton-volver-tienda">Volver a la tienda</button>
+                        </div>
+                    </form>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="card shadow-sm">
-                        <div class="card-header bg-light">
-                            Resumen de la Orden
-                        </div>
+                <div class="col-lg-4 mt-4 mt-lg-0">
+                    <div class="card border-0 shadow-sm rounded-4">
                         <div class="card-body">
-                            <ul class="list-group list-group-flush mb-3" id="lista-resumen-pago">
-                                <li class="list-group-item d-flex justify-content-between lh-sm">
-                                    <div>
-                                        <h6 class="my-0">Café Americano x2</h6>
-                                    </div>
-                                    <span class="text-muted">Q 30.00</span>
-                                </li>
-                            </ul>
-                            <div class="d-flex justify-content-between fw-bold fs-5">
-                                <span>Total (GTQ)</span>
-                                <span id="total-final-pago">Q 30.00</span>
+                            <h4>Resumen Final</h4>
+                            <div id="contenedor-resumen-pago">
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold fs-5">Total a pagar:</span>
+                                <span class="fw-bold fs-4 text-success" id="total-final">Q 0.00</span>
                             </div>
                         </div>
                     </div>
@@ -217,10 +212,48 @@
 
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script type="module" src="script.js"></script>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="carrito-sidebar" aria-labelledby="carritoLabel">
+        <div class="offcanvas-header text-white">
+            <h5 class="offcanvas-title" id="carritoLabel">Tu Carrito <i class="fa-solid fa-shopping-basket ms-2"></i>
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column">
+
+            <div id="cuerpo-carrito" class="flex-grow-1 overflow-auto">
+                <div class="item-carrito d-flex align-items-center justify-content-between">
+                    <div>
+                        <h6 class="mb-0">Espresso Intenso</h6>
+                        <small class="text-muted">Q 12.00 x 1</small>
+                    </div>
+                    <div class="controles-cantidad">
+                        <button class="btn btn-sm btn-reducir" data-id="1">-</button>
+                        <span class="fw-bold">1</span>
+                        <button class="btn btn-sm btn-aumentar" data-id="1">+</button>
+                    </div>
+                    <button class="btn btn-sm text-danger btn-borrar" data-id="1"><i
+                            class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+
+            <div class="border-top pt-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="fs-5 fw-bold">Subtotal:</span>
+                    <span class="fs-5 fw-bold text-success" id="subtotal-carrito">Q 0.00</span>
+                </div>
+                <button class="btn btn-warning w-100 fw-bold py-2 mb-2" id="boton-proceder-pago">
+                    PROCEDER AL PAGO <i class="fa-solid fa-arrow-right ms-2"></i>
+                </button>
+                <button class="btn btn-outline-secondary w-100 btn-sm" id="boton-vaciar-carrito">
+                    Vaciar Carrito
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
