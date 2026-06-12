@@ -166,3 +166,34 @@ let cafeocho = new Producto("Bagel con Queso", 20, "Comida", "Bagel tostado con 
 
 inventario.push(cafeUno, cafedos, cafetre, cafecuatro, cafecinco, cafeseis, cafesiete, cafeocho)
 
+const visualMenu = document.querySelector('#contenedor-productos')
+
+function dibujarProductos(inventario) {
+    visualMenu.innerHTML = ''
+    let moldeHTML = ''
+
+    for (let item of inventario) {
+        moldeHTML += `
+                <div class="col-md-6 col-lg-4">
+                    <div class="card tarjeta-producto shadow-sm">
+                        <img src="${item.imagen}" alt="imagenProducto"
+                            class="img-producto" alt="Croissant">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.nombre}</h5>
+                            <p class="card-text text-muted small">Categoria: ${item.categoria}</p>
+                            <p class="card-text text-muted small">Descripcion: ${item.descripcion}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fs-4 fw-bold">Q ${item.precio}.00</span>
+                                <button class="btn btn-anadir btn-agregar">
+                                    Añadir <i class="fa-solid fa-plus ms-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`
+    }
+
+    visualMenu.innerHTML = moldeHTML
+}
+
+dibujarProductos(inventario)
