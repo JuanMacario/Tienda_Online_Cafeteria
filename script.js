@@ -5,6 +5,7 @@ import { Carrito } from "./clases.js";
 let inventario = []
 let carrito = []
 let idCarrito = []
+let contador = 0
 let generarId = () => {
     return Math.floor(10 + Math.random() * 90) + Date.now().toString().slice(-6);
 }
@@ -49,6 +50,8 @@ const resumenFinal = document.querySelector('#lista-confirmacion-productos')
 const totalFinalVisual = document.querySelector('#total-confirmacion')
 const totalinpuesto = document.querySelector('#total-impuesto')
 const botonVolverTienda = document.querySelector('#btn-volver-inicio')
+
+const numeroCarrito = document.querySelector('#contador-elementos')
 
 
 function dibujarProductos(inventario) {
@@ -173,7 +176,8 @@ visualMenu.addEventListener('click', (event) => {
         dibujarCarrito(objetoCarrito.verCarrito())
         visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
     }
-
+    contador++
+    numeroCarrito.textContent = contador
     if (carrito.length > 0) {
         botonFinalizarCompra.disabled = false
         dibujarEspacioPago()
@@ -193,17 +197,25 @@ visualCarrito.addEventListener('click', (event) => {
         if (event.target.classList.contains('aumentar')) {
             busqueda.aumentaCantidad()
             busqueda.sumarSubtotal()
+            contador++
+            numeroCarrito.textContent = contador
         } else if (event.target.classList.contains('reducir')) {
             if (busqueda.cantidad != 1) {
                 busqueda.disminuirProducto()
                 busqueda.sumarSubtotal()
+                contador--
+                numeroCarrito.textContent = contador
             }
+
         } else if (event.target.classList.contains('borrar')) {
+            contador = contador - busqueda.cantidad
+            numeroCarrito.textContent = contador
             objetoCarrito.eliminar(event.target)
             let indice = idCarrito.findIndex(item => item == event.target.getAttribute('data-id'))
             idCarrito.splice(indice, 1)
             busqueda.reiniciar()
         }
+
         dibujarCarrito(objetoCarrito.verCarrito())
         visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
         if (idCarrito.length > 0) {
@@ -237,6 +249,8 @@ botonVaciar.addEventListener('click', () => {
     idCarrito = []
     visualPrincipal.classList.remove('d-none')
     visualPago.classList.add('d-none')
+    contador = 0
+    numeroCarrito.textContent = contador
 })
 
 //filtros
