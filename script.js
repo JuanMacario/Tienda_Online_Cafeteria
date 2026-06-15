@@ -33,6 +33,10 @@ const generalCarrito = document.querySelector('#carrito-sidebar')
 const visualPago = document.querySelector('#vista-pago')
 const visualTotal = document.querySelector('#subtotal-carrito')
 
+const espaciosubtotal = document.querySelector('#espacio-subtotal')
+const espacioimpuesto = document.querySelector('#espacio-impuesto')
+const espacioTotal = document.querySelector('#total-final')
+
 //botones
 const botonFinalizarCompra = document.querySelector('#boton-proceder-pago')
 
@@ -93,6 +97,12 @@ function aplicaFiltros(inventario, eleccion) {
     let filtros = inventario.filter(item => item)
 }
 
+function dibujarEspacioPago() {
+    espaciosubtotal.textContent = `Q ${objetoCarrito.subTotalCarrito}.00`
+    espacioimpuesto.textContent = `Q ${objetoCarrito.impuesto()}`
+    espacioTotal.textContent = `Q ${objetoCarrito.total}`
+}
+
 visualMenu.addEventListener('click', (event) => {
     if (event.target.classList.contains('btn')) {
         let busqueda = inventario.find(item => item.id == event.target.getAttribute('data-id'))
@@ -107,10 +117,13 @@ visualMenu.addEventListener('click', (event) => {
         visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
     }
 
-    if (carrito.length == 1) {
+    if (carrito.length > 0) {
         botonFinalizarCompra.disabled = false
+        dibujarEspacioPago()
     } else {
         botonFinalizarCompra.disabled = true
+        visualMenu.classList.remove('d-none')
+        visualPago.classList.add('d-none')
     }
 })
 
@@ -135,10 +148,13 @@ visualCarrito.addEventListener('click', (event) => {
         }
         dibujarCarrito(objetoCarrito.verCarrito())
         visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
-        if (idCarrito.length == 1) {
+        if (idCarrito.length > 0) {
             botonFinalizarCompra.disabled = false
+            dibujarEspacioPago()
         } else {
             botonFinalizarCompra.disabled = true
+            visualMenu.classList.remove('d-none')
+            visualPago.classList.add('d-none')
         }
     }
 })
@@ -146,7 +162,7 @@ visualCarrito.addEventListener('click', (event) => {
 botonFinalizarCompra.addEventListener('click', () => {
     visualMenu.classList.add('d-none')
     visualPago.classList.remove('d-none')
-    objetoCarrito.totalGeneral()
+    dibujarEspacioPago()
     // generalCarrito.classList.remove('show')
 })
 

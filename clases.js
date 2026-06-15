@@ -51,9 +51,12 @@ export class Carrito {
         return suma
     }
 
+    impuesto() {
+        return this.#subTotalCarrito * 0.05
+    }
+
     totalGeneral() {
-        console.log(this.#subTotalCarrito)
-        this.#total = this.#subTotalCarrito + (this.#subTotalCarrito * 0.05)
+        this.#total = this.#subTotalCarrito + this.impuesto()
     }
 }
 
