@@ -9,14 +9,14 @@ let generarId = () => {
     return Math.floor(10 + Math.random() * 90) + Date.now().toString().slice(-6);
 }
 
-let cafeUno = new Producto("Café Americano", 12, "Bebida caliente", "Café negro tradicional", generarId(), '#')
-let cafedos = new Producto("Café Latte", 18, "Bebida caliente", "Café con leche espumada", generarId(), '#')
-let cafetre = new Producto("Frappe de Chocolate", 25, "Bebida fría", "Bebida fría con chocolate y crema", generarId(), '#')
-let cafecuatro = new Producto("Smoothie de Fresa", 22, "Bebida fría", "Batido natural de fresa", generarId(), '#')
-let cafecinco = new Producto("Muffin de Vainilla", 15, "Postre", "Pan dulce suave de vainilla", generarId(), '#')
-let cafeseis = new Producto("Cheesecake", 28, "Postre", "Pastel frío de queso", generarId(), '#')
-let cafesiete = new Producto("Sandwich de Pollo", 30, "Comida", "Sandwich con pollo y vegetales", generarId(), '#')
-let cafeocho = new Producto("Bagel con Queso", 20, "Comida", "Bagel tostado con queso crema", generarId(), '#')
+let cafeUno = new Producto("Café Americano", 12, "Bebida caliente", "Café negro tradicional", generarId(), './images/cafe_americano_46d24acc-909c-4197-9e62-d71a84950d8c.webp')
+let cafedos = new Producto("Café Latte", 18, "Bebida caliente", "Café con leche espumada", generarId(), './images/Cafe Latte.jpg.jpeg')
+let cafetre = new Producto("Frappe de Chocolate", 25, "Bebida fría", "Bebida fría con chocolate y crema", generarId(), './images/frappe-chocolate-cafe-leche-receta.jpg')
+let cafecuatro = new Producto("Smoothie de Fresa", 22, "Bebida fría", "Batido natural de fresa", generarId(), './images/smoothie-de-fresas-1024x683.jpg')
+let cafecinco = new Producto("Muffin de Vainilla", 15, "Postre", "Pan dulce suave de vainilla", generarId(), './images/-XPYEDU7ICNCL5CDOP4NEBIVPBE.avif')
+let cafeseis = new Producto("Cheesecake", 28, "Postre", "Pastel frío de queso", generarId(), './images/221142-new-york-style-cheesecake-VAT-Beauty-4x3-7a5b4da8cde4437ab0c592e4f4cbe658.jpg')
+let cafesiete = new Producto("Sandwich de Pollo", 30, "Comida", "Sandwich con pollo y vegetales", generarId(), './images/s-ndw_AfsS859PRoHcJpKwd6r4Me0FUBDtCg.jpeg')
+let cafeocho = new Producto("Bagel con Queso", 20, "Comida", "Bagel tostado con queso crema", generarId(), './images/sándwich-de-baguette-fresco-con-tomates-lechuga-y-queso-en-un-plato-marrón-425095687.webp')
 
 let objetoCarrito = new Carrito(carrito)
 
@@ -194,6 +194,8 @@ visualCarrito.addEventListener('click', (event) => {
             visualPrincipal.classList.remove('d-none')
             visualPago.classList.add('d-none')
         }
+
+        dibujarResumen(objetoCarrito.verCarrito())
     }
 })
 
