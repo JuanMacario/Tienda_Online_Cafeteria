@@ -178,7 +178,7 @@ visualCarrito.addEventListener('click', (event) => {
             }
         } else if (event.target.classList.contains('borrar')) {
             objetoCarrito.eliminar(event.target)
-            let indice = idCarrito.findIndex(item => item.id == event.target.getAttribute('data-id'))
+            let indice = idCarrito.findIndex(item => item == event.target.getAttribute('data-id'))
             idCarrito.splice(indice, 1)
             busqueda.reiniciar()
         }
@@ -210,6 +210,9 @@ botonVaciar.addEventListener('click', () => {
     objetoCarrito.sumarSubtotalDos()
     objetoCarrito.totalGeneral()
     dibujarCarrito([])
+    idCarrito = []
+    visualPrincipal.classList.remove('d-none')
+    visualPago.classList.add('d-none')
 })
 
 //filtros
