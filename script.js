@@ -146,8 +146,8 @@ visualCarrito.addEventListener('click', (event) => {
 botonFinalizarCompra.addEventListener('click', () => {
     visualMenu.classList.add('d-none')
     visualPago.classList.remove('d-none')
+    objetoCarrito.totalGeneral()
     // generalCarrito.classList.remove('show')
-
 })
 
 

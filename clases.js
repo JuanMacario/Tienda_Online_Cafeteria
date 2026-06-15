@@ -47,13 +47,13 @@ export class Carrito {
         for (let item of this.#productos) {
             suma += item._subtotal
         }
+        this.#subTotalCarrito = suma
         return suma
     }
 
-    impuesto() {
-        let impuesto;
-        impuesto = this.sumarSubtotal() * 0.05
-        return impuesto
+    totalGeneral() {
+        console.log(this.#subTotalCarrito)
+        this.#total = this.#subTotalCarrito + (this.#subTotalCarrito * 0.05)
     }
 }
 
