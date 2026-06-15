@@ -175,9 +175,10 @@ visualMenu.addEventListener('click', (event) => {
         busqueda.sumarSubtotal()
         dibujarCarrito(objetoCarrito.verCarrito())
         visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
+        contador++
+        numeroCarrito.textContent = contador
     }
-    contador++
-    numeroCarrito.textContent = contador
+
     if (carrito.length > 0) {
         botonFinalizarCompra.disabled = false
         dibujarEspacioPago()
@@ -281,6 +282,8 @@ formularioPagar.addEventListener('submit', (event) => {
     targetaResumen.classList.remove('d-none')
     targetaFinal(objetoCarrito.verCarrito())
     objetoCarrito.restablecer()
+    contador = 0
+    numeroCarrito.textContent = contador
 })
 
 botonVolverTienda.addEventListener('click', () => {
