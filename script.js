@@ -33,17 +33,22 @@ const generalCarrito = document.querySelector('#carrito-sidebar')
 const visualPrincipal = document.querySelector('#vista-principal')
 const visualPago = document.querySelector('#vista-pago')
 const visualTotal = document.querySelector('#subtotal-carrito')
+const targetaResumen = document.querySelector('#vista-confirmacion')
 
 const espaciosubtotal = document.querySelector('#espacio-subtotal')
 const espacioimpuesto = document.querySelector('#espacio-impuesto')
 const espacioTotal = document.querySelector('#total-final')
 const visualResumen = document.querySelector('#contenedor-resumen-pago')
 const btnVolver = document.querySelector('#boton-volver-tienda')
-const btnPagar = document.querySelector('#boton-confirmar-compra')
+const formularioPagar = document.querySelector('#formulario-pago')
 
-//botones
 const botonFinalizarCompra = document.querySelector('#boton-proceder-pago')
 const botonVaciar = document.querySelector('#boton-vaciar-carrito')
+
+const resumenFinal = document.querySelector('#lista-confirmacion-productos')
+const totalFinalVisual = document.querySelector('#total-confirmacion')
+const totalinpuesto = document.querySelector('#total-impuesto')
+const botonVolverTienda = document.querySelector('#btn-volver-inicio')
 
 
 function dibujarProductos(inventario) {
@@ -127,6 +132,23 @@ function dibujarResumen(lista) {
         `
     }
     visualResumen.innerHTML = moldeHTML
+}
+
+function targetaFinal(lista) {
+    resumenFinal.innerHTML = ''
+    let moldeHTML = ''
+
+    for (let item of lista) {
+        moldeHTML += `
+                    <li class="d-flex justify-content-between mb-2">
+                        <span>${item.cantidad}x ${item.nombre}</span>
+                        <span class="text-muted">${formatearMoneda(item.verSubtotal())}</span>
+                    </li>`
+    }
+
+    resumenFinal.innerHTML = moldeHTML
+    totalFinalVisual.textContent = objetoCarrito.total
+    totalinpuesto.textContent = objetoCarrito.impuesto()
 }
 
 //NOTA: ESTA FUNCION SE LA PEDI A CHAT PARA PODER SABER COMO TRANFORMAR UNA CANTIDAD DE NUMERO A MONEDA
@@ -239,4 +261,16 @@ btnVolver.addEventListener('click', () => {
     visualPago.classList.add('d-none')
 })
 
+formularioPagar.addEventListener('submit', (event) => {
+    event.preventDefault()
+    visualPago.classList.add('d-none')
+    targetaResumen.classList.remove('d-none')
+    targetaFinal(objetoCarrito.verCarrito())
+    objetoCarrito.restablecer()
+})
+
+botonVolverTienda.addEventListener('click', () => {
+    targetaResumen.classList.add('d-none')
+    visualPrincipal.classList.remove('d-none')
+})
 dibujarProductos(inventario)

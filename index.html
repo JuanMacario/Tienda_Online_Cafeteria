@@ -144,6 +144,42 @@
             </div>
         </section>
 
+        <section id="vista-confirmacion" class="d-none text-center my-5">
+            <div class="card border-0 shadow-lg rounded-4 p-5 mx-auto" style="max-width: 600px;">
+
+                <div class="mb-4">
+                    <i class="fa-solid fa-circle-check text-success icono-exito"></i>
+                </div>
+
+                <h2 class="mb-3 text-uppercase">¡Gracias por tu compra!</h2>
+                <p class="text-muted mb-4">Tu pedido ha sido procesado con éxito. En breve comenzaremos a prepararlo con
+                    los mejores granos.</p>
+
+                <div class="bg-light p-4 rounded-3 text-start mb-4 shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                        <h5 class="mb-0">Resumen de tu pedido</h5>
+                        <span id="numero-orden" class="badge bg-dark">#ORD-001</span>
+                    </div>
+
+                    <ul class="list-unstyled mb-3" id="lista-confirmacion-productos">
+
+                    </ul>
+
+                    <div class="d-flex justify-content-between fw-bold border-top pt-3 fs-5">
+                        <span>Impuesto:</span>
+                        <span class="text-success" id="total-impuesto">Q 24.00</span>
+                        <span>Total Pagado:</span>
+                        <span class="text-success" id="total-confirmacion">Q 24.00</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-dark btn-lg px-5" id="btn-volver-inicio">
+                    <i class="fa-solid fa-house me-2"></i>Volver a la Tienda
+                </button>
+
+            </div>
+        </section>
+
     </main>
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="carrito-sidebar" aria-labelledby="carritoLabel">
