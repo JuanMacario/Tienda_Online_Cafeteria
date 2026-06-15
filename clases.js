@@ -18,7 +18,7 @@ export class Carrito {
     }
 
     set productos(value) {
-        this.productos = value
+        this.#productos = value
     }
 
     set total(value) {
@@ -34,7 +34,7 @@ export class Carrito {
     }
 
     verCarrito() {
-        return [...this.#productos]
+        return this.#productos
     }
 
     eliminar(value) {
@@ -57,6 +57,14 @@ export class Carrito {
 
     totalGeneral() {
         this.#total = this.#subTotalCarrito + this.impuesto()
+    }
+
+    restablecer() {
+        this.#productos.forEach(item => {
+            item.reiniciar()
+        });
+
+        this.productos = []
     }
 }
 
@@ -126,10 +134,6 @@ export class Producto {
         this.categoria = value
     }
 
-    set cantidad(value) {
-        this.#cantidad = value
-    }
-
     set descripcion(value) {
         this.descripcion = value
     }
@@ -142,6 +146,10 @@ export class Producto {
         this._subtotal = value
     }
 
+    verSubtotal() {
+        return this._subtotal
+    }
+
     aumentaCantidad() {
         this.#cantidad += 1
     }
@@ -152,5 +160,10 @@ export class Producto {
 
     sumarSubtotal() {
         this.subtotal = this.cantidad * this.precio
+    }
+
+    reiniciar() {
+        this.#cantidad = 0
+        this._subtotal = 0
     }
 }

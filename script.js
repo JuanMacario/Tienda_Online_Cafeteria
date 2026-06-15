@@ -30,15 +30,20 @@ const filtrosInput = document.querySelector('#input-buscador')
 const visualMenu = document.querySelector('#contenedor-productos')
 const visualCarrito = document.querySelector('#cuerpo-carrito')
 const generalCarrito = document.querySelector('#carrito-sidebar')
+const visualPrincipal = document.querySelector('#vista-principal')
 const visualPago = document.querySelector('#vista-pago')
 const visualTotal = document.querySelector('#subtotal-carrito')
 
 const espaciosubtotal = document.querySelector('#espacio-subtotal')
 const espacioimpuesto = document.querySelector('#espacio-impuesto')
 const espacioTotal = document.querySelector('#total-final')
+const visualResumen = document.querySelector('#contenedor-resumen-pago')
+const btnVolver = document.querySelector('#boton-volver-tienda')
+const btnPagar = document.querySelector('#boton-confirmar-compra')
 
 //botones
 const botonFinalizarCompra = document.querySelector('#boton-proceder-pago')
+const botonVaciar = document.querySelector('#boton-vaciar-carrito')
 
 
 function dibujarProductos(inventario) {
@@ -78,7 +83,8 @@ function dibujarCarrito(carrito) {
                 <div class="item-carrito d-flex align-items-center justify-content-between" data-id="${item.id}">
                     <div>
                         <h6 class="mb-0">${item.nombre}</h6>
-                        <small class="text-muted">Q ${item.precio}.00 x ${item.cantidad}</small>
+                        <small class="text-muted">${formatearMoneda(item.precio)} x ${item.cantidad}</small>
+                        <small class="text-muted">: Q ${item.verSubtotal()}. 00</small>
                     </div>
                     <div class="controles-cantidad">
                         <button class="btn btn-sm btn-reducir reducir" data-id="${item.id}">-</button>
@@ -98,10 +104,39 @@ function aplicaFiltros(inventario, eleccion) {
 }
 
 function dibujarEspacioPago() {
-    espaciosubtotal.textContent = `Q ${objetoCarrito.subTotalCarrito}.00`
-    espacioimpuesto.textContent = `Q ${objetoCarrito.impuesto()}`
-    espacioTotal.textContent = `Q ${objetoCarrito.total}`
+    objetoCarrito.totalGeneral();
+    // Usa la función aquí:
+    espaciosubtotal.textContent = formatearMoneda(objetoCarrito.subTotalCarrito);
+    espacioimpuesto.textContent = formatearMoneda(objetoCarrito.impuesto());
+    espacioTotal.textContent = formatearMoneda(objetoCarrito.total);
 }
+
+function dibujarResumen(lista) {
+    visualResumen.innerHTML = ''
+    let moldeHTML = ''
+    for (let item of lista) {
+        moldeHTML += `
+                <div class="d-flex align-items-center justify-content-between" data-id="${item.id}">
+                    <div>
+                        <h6 class="mb-0">${item.nombre}</h6>
+                        <small class="text-muted">${formatearMoneda(item.precio)} x ${item.cantidad}</small>
+                        <small class="text-muted">: Q ${item.verSubtotal()}. 00</small>
+                    </div>
+                </div>
+                <br>
+        `
+    }
+    visualResumen.innerHTML = moldeHTML
+}
+
+//NOTA: ESTA FUNCION SE LA PEDI A CHAT PARA PODER SABER COMO TRANFORMAR UNA CANTIDAD DE NUMERO A MONEDA
+const formatearMoneda = (numero) => {
+    return new Intl.NumberFormat('es-GT', {
+        style: 'currency',
+        currency: 'GTQ',
+        minimumFractionDigits: 2
+    }).format(numero);
+};
 
 visualMenu.addEventListener('click', (event) => {
     if (event.target.classList.contains('btn')) {
@@ -112,17 +147,19 @@ visualMenu.addEventListener('click', (event) => {
             objetoCarrito.agregarCarrito(busqueda)
             idCarrito.push(busqueda.id)
         }
-        dibujarCarrito(objetoCarrito.verCarrito())
         busqueda.sumarSubtotal()
+        dibujarCarrito(objetoCarrito.verCarrito())
         visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
     }
 
     if (carrito.length > 0) {
         botonFinalizarCompra.disabled = false
         dibujarEspacioPago()
+        botonVaciar.disabled = false
     } else {
+        botonVaciar.disabled = true
         botonFinalizarCompra.disabled = true
-        visualMenu.classList.remove('d-none')
+        visualPrincipal.classList.remove('d-none')
         visualPago.classList.add('d-none')
     }
 })
@@ -143,29 +180,37 @@ visualCarrito.addEventListener('click', (event) => {
             objetoCarrito.eliminar(event.target)
             let indice = idCarrito.findIndex(item => item.id == event.target.getAttribute('data-id'))
             idCarrito.splice(indice, 1)
-            busqueda.cantidad = 0
-            busqueda.subtotal = 0
+            busqueda.reiniciar()
         }
         dibujarCarrito(objetoCarrito.verCarrito())
         visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
         if (idCarrito.length > 0) {
             botonFinalizarCompra.disabled = false
             dibujarEspacioPago()
+            botonVaciar.disabled = false
         } else {
+            botonVaciar.disabled = true
             botonFinalizarCompra.disabled = true
-            visualMenu.classList.remove('d-none')
+            visualPrincipal.classList.remove('d-none')
             visualPago.classList.add('d-none')
         }
     }
 })
 
 botonFinalizarCompra.addEventListener('click', () => {
-    visualMenu.classList.add('d-none')
+    visualPrincipal.classList.add('d-none')
     visualPago.classList.remove('d-none')
     dibujarEspacioPago()
+    dibujarResumen(objetoCarrito.verCarrito())
     // generalCarrito.classList.remove('show')
 })
 
+botonVaciar.addEventListener('click', () => {
+    objetoCarrito.restablecer()
+    objetoCarrito.sumarSubtotalDos()
+    objetoCarrito.totalGeneral()
+    dibujarCarrito([])
+})
 
 //filtros
 filtrosEleccion.addEventListener('change', (event) => {
@@ -181,6 +226,12 @@ filtrosInput.addEventListener('input', (event) => {
     let buscador = inventario.filter(item => item.nombre.toLowerCase().includes(event.target.value.toLowerCase()))
     buscador = inventario.filter(item => item.descripcion.toLowerCase().includes(event.target.value.toLowerCase()))
     dibujarProductos(buscador)
+})
+
+//venta Compra
+btnVolver.addEventListener('click', () => {
+    visualPrincipal.classList.remove('d-none')
+    visualPago.classList.add('d-none')
 })
 
 dibujarProductos(inventario)
