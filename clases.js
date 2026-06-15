@@ -70,14 +70,16 @@ export class Carrito {
 
 export class Producto {
     #nombre;
+    #nombreDos;
     #precio;
     #categoria;
     #descripcion;
+    #descripcionDos;
     #id;
     #cantidad;
     #imagen;
 
-    constructor(nombre, precio, categoria, descripcion, id, imagen) {
+    constructor(nombre, precio, categoria, descripcion, id, imagen, descripcionDos, nombreDos) {
         this.#nombre = nombre
         this.#precio = precio
         this.#categoria = categoria
@@ -85,6 +87,9 @@ export class Producto {
         this.#id = id
         this.#cantidad = 0
         this.#imagen = imagen
+        this.#descripcionDos = descripcionDos
+        this.#nombreDos = nombreDos
+
     }
 
     get nombre() {
@@ -118,6 +123,15 @@ export class Producto {
     get imagen() {
         return this.#imagen
     }
+
+    get descripcionDos() {
+        return this.#descripcionDos
+    }
+
+    get nombreDos() {
+        return this.#nombre
+    }
+
     set imagen(value) {
         this.imagen = value
     }

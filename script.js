@@ -9,14 +9,14 @@ let generarId = () => {
     return Math.floor(10 + Math.random() * 90) + Date.now().toString().slice(-6);
 }
 
-let cafeUno = new Producto("Café Americano", 12, "Bebida caliente", "Café negro tradicional", generarId(), './images/cafe_americano_46d24acc-909c-4197-9e62-d71a84950d8c.webp')
-let cafedos = new Producto("Café Latte", 18, "Bebida caliente", "Café con leche espumada", generarId(), './images/Cafe Latte.jpg.jpeg')
-let cafetre = new Producto("Frappe de Chocolate", 25, "Bebida fría", "Bebida fría con chocolate y crema", generarId(), './images/frappe-chocolate-cafe-leche-receta.jpg')
-let cafecuatro = new Producto("Smoothie de Fresa", 22, "Bebida fría", "Batido natural de fresa", generarId(), './images/smoothie-de-fresas-1024x683.jpg')
-let cafecinco = new Producto("Muffin de Vainilla", 15, "Postre", "Pan dulce suave de vainilla", generarId(), './images/-XPYEDU7ICNCL5CDOP4NEBIVPBE.avif')
-let cafeseis = new Producto("Cheesecake", 28, "Postre", "Pastel frío de queso", generarId(), './images/221142-new-york-style-cheesecake-VAT-Beauty-4x3-7a5b4da8cde4437ab0c592e4f4cbe658.jpg')
-let cafesiete = new Producto("Sandwich de Pollo", 30, "Comida", "Sandwich con pollo y vegetales", generarId(), './images/s-ndw_AfsS859PRoHcJpKwd6r4Me0FUBDtCg.jpeg')
-let cafeocho = new Producto("Bagel con Queso", 20, "Comida", "Bagel tostado con queso crema", generarId(), './images/sándwich-de-baguette-fresco-con-tomates-lechuga-y-queso-en-un-plato-marrón-425095687.webp')
+let cafeUno = new Producto("Café Americano", 12, "Bebida caliente", "Café negro tradicional", generarId(), './images/cafe_americano_46d24acc-909c-4197-9e62-d71a84950d8c.webp', 'Café cafe negro tradicional', "Bebida caliente")
+let cafedos = new Producto("Café Latte", 18, "Bebida caliente", "Café con leche espumada", generarId(), './images/Cafe Latte.jpg.jpeg', 'Café cafe con leche espumada', 'Bebida caliente')
+let cafetre = new Producto("Frappe de Chocolate", 25, "Bebida fría", "Bebida fría con chocolate y crema", generarId(), './images/frappe-chocolate-cafe-leche-receta.jpg', 'Bebida fría fria con chocolate y crema', 'Bebida fría fria')
+let cafecuatro = new Producto("Smoothie de Fresa", 22, "Bebida fría", "Batido natural de fresa", generarId(), './images/smoothie-de-fresas-1024x683.jpg', 'Batido natural de fresa', 'Bebida fría fria')
+let cafecinco = new Producto("Muffin de Vainilla", 15, "Postre", "Pan dulce suave de vainilla", generarId(), './images/-XPYEDU7ICNCL5CDOP4NEBIVPBE.avif', "Pan dulce suave de vainilla", 'Muffin de Vainilla')
+let cafeseis = new Producto("Cheesecake", 28, "Postre", "Pastel frío de queso", generarId(), './images/221142-new-york-style-cheesecake-VAT-Beauty-4x3-7a5b4da8cde4437ab0c592e4f4cbe658.jpg', 'Pastel frío frio de queso', 'Cheesecake')
+let cafesiete = new Producto("Sandwich de Pollo", 30, "Comida", "Sandwich con pollo y vegetales", generarId(), './images/s-ndw_AfsS859PRoHcJpKwd6r4Me0FUBDtCg.jpeg', 'Sandwich con pollo y vegetales', 'Sandwich de Pollo')
+let cafeocho = new Producto("Bagel con Queso", 20, "Comida", "Bagel tostado con queso crema", generarId(), './images/sándwich-de-baguette-fresco-con-tomates-lechuga-y-queso-en-un-plato-marrón-425095687.webp', 'Bagel tostado con queso crema', 'Bagel con Queso')
 
 let objetoCarrito = new Carrito(carrito)
 
@@ -250,8 +250,8 @@ filtrosEleccion.addEventListener('change', (event) => {
 })
 
 filtrosInput.addEventListener('input', (event) => {
-    let buscador = inventario.filter(item => item.nombre.toLowerCase().includes(event.target.value.toLowerCase()))
-    buscador = inventario.filter(item => item.descripcion.toLowerCase().includes(event.target.value.toLowerCase()))
+    let buscador = inventario.filter(item => item.nombreDos.toLowerCase().includes(event.target.value.toLowerCase()))
+    buscador = inventario.filter(item => item.descripcionDos.toLowerCase().includes(event.target.value.toLowerCase()))
     dibujarProductos(buscador)
 })
 
