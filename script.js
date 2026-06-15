@@ -150,8 +150,8 @@ function targetaFinal(lista) {
     }
 
     resumenFinal.innerHTML = moldeHTML
-    totalFinalVisual.textContent = objetoCarrito.total
-    totalinpuesto.textContent = objetoCarrito.impuesto()
+    totalFinalVisual.textContent = formatearMoneda(objetoCarrito.total)
+    totalinpuesto.textContent = formatearMoneda(objetoCarrito.impuesto())
 }
 
 //NOTA: ESTA FUNCION SE LA PEDI A CHAT PARA PODER SABER COMO TRANFORMAR UNA CANTIDAD DE NUMERO A MONEDA
