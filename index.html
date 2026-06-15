@@ -23,10 +23,10 @@
             <button class="boton-carrito position-relative" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#carrito-sidebar" id="boton-abrir-carrito">
                 <i class="fa-solid fa-cart-shopping me-2"></i>Mi Pedido
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                <!-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                     id="contador-elementos">
                     0
-                </span>
+                </span> -->
             </button>
         </div>
     </nav>
@@ -59,9 +59,9 @@
 
                 <div class="col-md-5 col-lg-4">
                     <select class="form-select shadow-none" id="selector-categoria">
-                        <option value="todos" selected>Todas las categorías</option>
+                        <option value="todos">Todas las categorías</option>
                         <option value="Bebida caliente">Bebidas Calientes</option>
-                        <option value="bebida frio">Bebidas Frías</option>
+                        <option value="Bebida fría">Bebidas Frías</option>
                         <option value="postre">Postres</option>
                         <option value="comida">Comida</option>
                     </select>
@@ -157,15 +157,15 @@
                 <button class="btn btn-warning w-100 fw-bold py-2 mb-2" id="boton-proceder-pago" disabled>
                     PROCEDER AL PAGO <i class="fa-solid fa-arrow-right ms-2"></i>
                 </button>
-                <button class="btn btn-outline-secondary w-100 btn-sm" id="boton-vaciar-carrito" disabled>
+                <!-- <button class="btn btn-outline-secondary w-100 btn-sm" id="boton-vaciar-carrito" disabled>
                     Vaciar Carrito
-                </button>
+                </button> -->
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

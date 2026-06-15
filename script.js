@@ -1,156 +1,12 @@
-class Producto {
-    #nombre;
-    #precio;
-    #categoria;
-    #descripcion;
-    #id;
-    #cantidad;
-    #imagen;
-
-    constructor(nombre, precio, categoria, descripcion, id, imagen) {
-        this.#nombre = nombre
-        this.#precio = precio
-        this.#categoria = categoria
-        this.#descripcion = descripcion
-        this.#id = id
-        this.#cantidad = 0
-        this.#imagen = imagen
-    }
-
-    get nombre() {
-        return this.#nombre
-    }
-
-    get precio() {
-        return this.#precio
-    }
-
-    get categoria() {
-        return this.#categoria
-    }
-
-    get descripcion() {
-        return this.#descripcion
-    }
-
-    get id() {
-        return this.#id
-    }
-
-    get subtotal() {
-        return this._subTotal
-    }
-
-    get cantidad() {
-        return this.#cantidad
-    }
-
-    get imagen() {
-        return this.#imagen
-    }
-    set imagen(value) {
-        this.imagen = value
-    }
-
-    set nombre(value) {
-        this.nombre = value
-    }
-
-    set precio(value) {
-        this.precio = value
-    }
-
-    set categoria(value) {
-        this.categoria = value
-    }
-
-    set descripcion(value) {
-        this.descripcion = value
-    }
-
-    set id(value) {
-        this.id = value
-    }
-
-    set subtotal(value) {
-        this._subtotal = value
-    }
-
-    aumentaCantidad() {
-        this.#cantidad += 1
-    }
-
-    disminuirProducto() {
-        this.#cantidad -= 1
-    }
-
-    sumarSubtotal() {
-        let suma = this.cantidad * this.precio
-        this.subtotal = suma
-    }
-}
-
-class Carrito {
-    #productos;
-    #total;
-    #subTotalCarrito;
-
-    constructor(productos) {
-        this.#productos = productos
-        this.#total = 0
-        this.#subTotalCarrito = 0
-    }
-
-    get productos() {
-        return this.#productos
-    }
-
-    get total() {
-        return this.#total
-    }
-
-    get subTotalCarrito() {
-        return this.#subTotalCarrito
-    }
-
-    set productos(value) {
-        this.productos = value
-    }
-
-    set total(value) {
-        this.total = value
-    }
-
-    set subTotalCarrito(value) {
-        this.subTotalCarrito = value
-    }
-
-    eliminar(value) {
-        let indice = this.productos.findIndex(item => item.id == value.getAttribute('data-id'))
-        carrito.splice(indice, 1)
-    }
-
-    sumarSubtotalDos() {
-        let suma;
-        for (let item of this.productos) {
-            suma += item.subtotal
-        }
-        return suma
-    }
-
-    impuesto() {
-        let impuesto;
-        impuesto = this.sumarSubtotal() * 0.05
-        return impuesto
-    }
-}
+import { Producto } from './clases.js'
+import { Carrito } from "./clases.js";
 
 //Crear los Cafes
 let inventario = []
 let carrito = []
-let busquedaCarrito = []
+let idCarrito = []
 let generarId = () => {
-    return Math.floor(Math.random() * 10000)
+    return Math.floor(10 + Math.random() * 90) + Date.now().toString().slice(-6);
 }
 
 let cafeUno = new Producto("Café Americano", 12, "Bebida caliente", "Café negro tradicional", generarId(), '#')
@@ -175,6 +31,7 @@ const visualMenu = document.querySelector('#contenedor-productos')
 const visualCarrito = document.querySelector('#cuerpo-carrito')
 const generalCarrito = document.querySelector('#carrito-sidebar')
 const visualPago = document.querySelector('#vista-pago')
+const visualTotal = document.querySelector('#subtotal-carrito')
 
 //botones
 const botonFinalizarCompra = document.querySelector('#boton-proceder-pago')
@@ -241,13 +98,13 @@ visualMenu.addEventListener('click', (event) => {
         let busqueda = inventario.find(item => item.id == event.target.getAttribute('data-id'))
         busqueda.aumentaCantidad()
 
-        if (!busquedaCarrito.includes(busqueda.id)) {
-            busquedaCarrito.push(busqueda.id)
-            objetoCarrito.productos = objetoCarrito
-            carrito.push(busqueda)
+        if (!idCarrito.includes(busqueda.id)) {
+            objetoCarrito.agregarCarrito(busqueda)
+            idCarrito.push(busqueda.id)
         }
-        dibujarCarrito(carrito)
+        dibujarCarrito(objetoCarrito.verCarrito())
         busqueda.sumarSubtotal()
+        visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
     }
 
     if (carrito.length == 1) {
@@ -260,19 +117,25 @@ visualMenu.addEventListener('click', (event) => {
 visualCarrito.addEventListener('click', (event) => {
     if (event.target.classList.contains('btn')) {
         let busqueda = inventario.find(item => item.id == event.target.getAttribute('data-id'))
-        if (event.target.classList.contains('aumentar')) {
 
+        if (event.target.classList.contains('aumentar')) {
             busqueda.aumentaCantidad()
+            busqueda.sumarSubtotal()
         } else if (event.target.classList.contains('reducir')) {
             if (busqueda.cantidad != 1) {
                 busqueda.disminuirProducto()
+                busqueda.sumarSubtotal()
             }
         } else if (event.target.classList.contains('borrar')) {
             objetoCarrito.eliminar(event.target)
+            let indice = idCarrito.findIndex(item => item.id == event.target.getAttribute('data-id'))
+            idCarrito.splice(indice, 1)
+            busqueda.cantidad = 0
+            busqueda.subtotal = 0
         }
-        dibujarCarrito(carrito)
-
-        if (carrito.length == 1) {
+        dibujarCarrito(objetoCarrito.verCarrito())
+        visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
+        if (idCarrito.length == 1) {
             botonFinalizarCompra.disabled = false
         } else {
             botonFinalizarCompra.disabled = true
@@ -290,7 +153,18 @@ botonFinalizarCompra.addEventListener('click', () => {
 
 //filtros
 filtrosEleccion.addEventListener('change', (event) => {
+    if (event.target.value != 'todos') {
+        let busqueda = inventario.filter(item => item.categoria.toLowerCase() == event.target.value.toLowerCase())
+        dibujarProductos(busqueda)
+    } else {
+        dibujarProductos(inventario)
+    }
+})
 
+filtrosInput.addEventListener('input', (event) => {
+    let buscador = inventario.filter(item => item.nombre.toLowerCase().includes(event.target.value.toLowerCase()))
+    buscador = inventario.filter(item => item.descripcion.toLowerCase().includes(event.target.value.toLowerCase()))
+    dibujarProductos(buscador)
 })
 
 dibujarProductos(inventario)
