@@ -154,7 +154,7 @@ function targetaFinal(lista) {
     totalinpuesto.textContent = formatearMoneda(objetoCarrito.impuesto())
 }
 
-//NOTA: ESTA FUNCION SE LA PEDI A CHAT PARA PODER SABER COMO TRANFORMAR UNA CANTIDAD DE NUMERO A MONEDA
+
 const formatearMoneda = (numero) => {
     return new Intl.NumberFormat('es-GT', {
         style: 'currency',
