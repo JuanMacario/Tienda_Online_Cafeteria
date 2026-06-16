@@ -45,7 +45,7 @@ export class Carrito {
     sumarSubtotalDos() {
         let suma = 0
         for (let item of this.#productos) {
-            suma += item._subtotal
+            suma += item.verSubtotal()
         }
         this.#subTotalCarrito = suma
         return suma
@@ -78,6 +78,7 @@ export class Producto {
     #id;
     #cantidad;
     #imagen;
+    #subtotal;
 
     constructor(nombre, precio, categoria, descripcion, id, imagen, descripcionDos, nombreDos) {
         this.#nombre = nombre
@@ -89,7 +90,7 @@ export class Producto {
         this.#imagen = imagen
         this.#descripcionDos = descripcionDos
         this.#nombreDos = nombreDos
-
+        this.#subtotal = 0
     }
 
     get nombre() {
@@ -110,10 +111,6 @@ export class Producto {
 
     get id() {
         return this.#id
-    }
-
-    get subtotal() {
-        return this._subTotal
     }
 
     get cantidad() {
@@ -156,12 +153,8 @@ export class Producto {
         this.id = value
     }
 
-    set subtotal(value) {
-        this._subtotal = value
-    }
-
     verSubtotal() {
-        return this._subtotal
+        return this.#subtotal
     }
 
     aumentaCantidad() {
@@ -173,11 +166,11 @@ export class Producto {
     }
 
     sumarSubtotal() {
-        this.subtotal = this.cantidad * this.precio
+        this.#subtotal = this.cantidad * this.precio
     }
 
     reiniciar() {
         this.#cantidad = 0
-        this._subtotal = 0
+        this.#subtotal = 0
     }
 }

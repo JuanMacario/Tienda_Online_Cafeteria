@@ -177,6 +177,7 @@ visualMenu.addEventListener('click', (event) => {
         visualTotal.textContent = `Q. ${objetoCarrito.sumarSubtotalDos()} .00`
         contador++
         numeroCarrito.textContent = contador
+        console.log(objetoCarrito.verCarrito())
     }
 
     if (carrito.length > 0) {
