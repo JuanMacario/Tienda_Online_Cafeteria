@@ -283,6 +283,7 @@ formularioPagar.addEventListener('submit', (event) => {
     targetaFinal(objetoCarrito.verCarrito())
     objetoCarrito.restablecer()
     contador = 0
+    idCarrito = []
     numeroCarrito.textContent = contador
 })
 
